@@ -1,0 +1,38 @@
+# Configuration for Cog ⚙️
+build:
+  gpu: true
+  cuda: "11.8"
+  python_version: "3.10"
+  system_packages:
+    - wget
+    - ffmpeg
+  python_packages:
+    - "torch==2.0.1"
+    - "torchvision==0.15.2"
+    - "torchaudio==2.0.2"
+    - "accelerate==0.21.0"
+    - "diffusers==0.23.0"
+    - "transformers==4.25.1"
+    - "einops==0.6.1"
+    - "omegaconf==2.3.0"
+    - "safetensors==0.3.1"
+    - "imageio==2.27.0"
+    - "imageio[ffmpeg]"
+    - "triton"
+
+  run:
+  - pip install xformers==0.0.22.post4
+  # - git clone --branch sdxl https://github.com/guoyww/AnimateDiff /AnimateDiff
+  - apt-get update && apt-get install -y git-lfs
+  # - git lfs install
+  # - rm -rf /AnimateDiff/models/StableDiffusion
+  # - git clone https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0 /AnimateDiff/models/StableDiffusion
+  # - rm -rf /AnimateDiff/models/Motion_Module
+  # - ln -s /src/Motion_Module /AnimateDiff/models/Motion_Module
+  # - wget -O /AnimateDiff/models/Motion_Module/mm_sdxl_v10_beta.ckpt https://huggingface.co/guoyww/animatediff/resolve/main/mm_sdxl_v10_beta.ckpt
+  # - rm -rf /AnimateDiff/models/DreamBooth_LoRA
+  # - ln -s /src/DreamBooth_LoRA /AnimateDiff/models/DreamBooth_LoRA
+  # - wget -O /AnimateDiff/models/DreamBooth_LoRA/dynavision.safetensors https://civitai.com/api/download/models/169718
+  # - wget -O /AnimateDiff/models/DreamBooth_LoRA/dreamshaper.safetensors https://civitai.com/api/download/models/126688
+  # - wget -O /AnimateDiff/models/DreamBooth_LoRA/deepblue.safetensors https://civitai.com/api/download/models/189102
+predict: "predict.py:Predictor"

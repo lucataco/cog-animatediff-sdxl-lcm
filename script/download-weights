@@ -1,0 +1,62 @@
+#!/usr/bin/env python
+import os
+import sys
+import torch
+from diffusers import DiffusionPipeline, AutoencoderKL, UNet2DConditionModel
+
+# Make cache folder
+# if not os.path.exists("Motion_Module"):
+#     os.makedirs("Motion_Module")
+
+# if not os.path.exists("DreamBooth_LoRA"):
+#     os.makedirs("DreamBooth_LoRA")
+
+# unet = UNet2DConditionModel.from_pretrained(
+#     "latent-consistency/lcm-sdxl",
+#     torch_dtype=torch.float16,
+#     variant="fp16",
+#     cache_dir="lcm-cache",
+# )
+
+better_vae = AutoencoderKL.from_pretrained(
+    "madebyollin/sdxl-vae-fp16-fix", torch_dtype=torch.float16
+)
+
+pipe = DiffusionPipeline.from_pretrained(
+    "stabilityai/stable-diffusion-xl-base-1.0",
+    vae=better_vae,
+    torch_dtype=torch.float16,
+    use_safetensors=True,
+)
+
+pipe.save_pretrained("./StableDiffusionXL", safe_serialization=True)
+
+# Download SDXL (everyting?)
+# os.system("git config --global --add safe.directory /src")
+# os.system("git lfs install")
+# os.system("git clone https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0 StableDiffusion")
+
+# Link StableDiffusion folder to AnimateDiff
+# os.system("rm -r /AnimateDiff/models/StableDiffusion")
+# os.system("ln -s /src/StableDiffusion /AnimateDiff/models/StableDiffusion")
+
+
+# Download SDXL Motion Module
+# os.system("wget -O Motion_Module/mm_sdxl_v10_beta.ckpt https://huggingface.co/guoyww/animatediff/resolve/main/mm_sdxl_v10_beta.ckpt")
+
+# Link Motion folder to AnimateDiff
+# os.system("rm -rf /AnimateDiff/models/Motion_Module")
+# os.system("ln -s /src/Motion_Module /AnimateDiff/models/Motion_Module")
+
+
+# Download safetensors
+# os.system("wget -O DreamBooth_LoRA/toonyou_beta3.safetensors https://civitai.com/api/download/models/78775")
+# os.system("wget -O DreamBooth_LoRA/rcnzCartoon3d_v10.safetensors https://civitai.com/api/download/models/71009")
+# os.system("wget -O DreamBooth_LoRA/majicmixRealistic_v5Preview.safetensors https://civitai.com/api/download/models/79068")
+
+# Link LoRA folder to AnimateDiff
+# os.system("rm -rf /AnimateDiff/models/DreamBooth_LoRA")
+# os.system("ln -s /src/DreamBooth_LoRA /AnimateDiff/models/DreamBooth_LoRA")
+
+
+# os.system("git clone --branch sdxl https://github.com/guoyww/AnimateDiff /AnimateDiff")
